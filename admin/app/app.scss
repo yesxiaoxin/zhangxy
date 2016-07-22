@@ -1,0 +1,102 @@
+$high_color: #e7645c;
+$high_color2: #4296DB;
+
+body {
+    margin: 30px auto;
+    max-width: 960px;
+    font-size: 14px;
+    font-family: Helvetica, Arial, Hiragino Sans GB, Microsoft YaHei, sans-serif;
+}
+
+html {
+    font-size: 100%;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+
+html, html a {
+    -webkit-font-smoothing: antialiased;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+}
+
+h1 {
+    font-size: 3em;
+    font-weight: normal;
+    margin: 0.6em 0;
+    line-height: 1.0;
+}
+
+textarea {
+    background: #fefefe;
+
+    border: 1px solid #ddd;
+    margin: 0 auto;
+
+    padding: 20px 20px;
+
+    height: 500px;
+    width: 100%;
+
+    font-family: "Hiragino Sans GB", "Microsoft Yahei", Verdana, Arial, sans-serif;
+    font-size: 13pt;
+    line-height: 1.8em;
+
+    resize: none;
+    outline: none;
+    display: block;
+
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    box-sizing: border-box;
+
+}
+
+.buttons {
+    margin-top: 60px;
+    text-align: center;
+    position: relative;
+
+    .demo_buttons {
+        float: left;
+        position: absolute;
+        left: 0;
+        a {
+            font-size: 12px;
+            color: #999;
+            text-decoration: none;
+            margin-right: 15px;
+
+            &:hover {
+                color: $high_color;
+            }
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+
+    }
+
+    #view {
+        margin-left: 30px;
+        background: lighten($high_color2, 10%);
+        &:hover {
+            background: darken($high_color2, 8%);
+        }
+    }
+
+    .button {
+        padding: 10px 30px;
+        font-size: 18px;
+        letter-spacing: 1px;
+        text-decoration: none;
+
+        border: 1px solid #eee;
+        border-radius: 5px;
+        background: $high_color2;
+        color: white;
+
+        &:hover {
+            background: darken($high_color2, 10%);
+        }
+    }
+}

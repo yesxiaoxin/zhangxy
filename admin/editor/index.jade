@@ -1,0 +1,59 @@
+html
+	head
+		meta(content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0", name="viewport")
+		meta(content="yes", name="apple-mobile-web-app-capable")
+		meta(content="black", name="apple-mobile-web-app-status-bar-style")
+		meta(content="telephone=no", name="format-detection")
+		meta(name="renderer", content="webkit")
+
+		title Editor
+		+need_admin()
+		+load('fonts /template/admin/editor/pure_editor.scss')
+    body
+		#main
+			#controls
+				.cmds
+					a#hide_controls(data-bind="click: hide_controls", href="#")
+						i.fa.fa-arrow-left
+					a#create_post(data-bind="click: open_new_window", href="#")
+						i.fa.fa-plus
+						| New Post
+				ul#posts.posts(data-bind="foreach: posts")
+					li
+						a.post(data-bind="click: edit, event:{touchend: edit}", href="#")
+							span(data-bind="text: title")
+							span.remove(data-bind="click: remove") x
+			#editor
+				input#title(type="text", data-bind="value: current_post().title, event:{keyup: sync}")
+				textarea#textarea(data-bind="event:{keyup: sync}")
+			#editor_save_button(data-bind="visible:show_tip_info()")
+				a(data-bind="text: tip_info, click: _sync", href="#") Save
+				span.precess(data-bind="style:{width: wait_to_sync_precess()}")
+			#show_controls_button
+				a(data-bind="click: show_controls", href="#")
+					i.fa.fa-arrow-right
+
+		#new_window
+			#window_bg
+			.main
+				#new_window_body
+					.close(data-bind="click:hide_new_window")
+						a(href="#")
+							i.fa.fa-times
+							| close
+					p
+						label= '文件名' if lang=='zh_cn' else 'Filename'
+						input(type="text", id="new_path", data-bind='event: {keyup: function(){if (event.keyCode == 13) create_new_one()}}')
+					p.new_window_note
+						if lang=='zh_cn'
+							| 为了避免复杂的操作，Web版编辑器只显示最近20篇文章；你也可以使用桌面端程序<a href="https://www.farbox.com/service/download-editor" target="_blank">FarEditor</a>进行写作。
+						else
+							| To avoid complicated operations, the Web Editor only displays the recent 20 artilces; you also can download the desktop APP <a href="https://www.farbox.com/service/download-editor" target="_blank">FarEditor</a> for writing.
+					p.button
+						a(href="#", data-bind="click: create_new_one")= '新日志' if lang=='zh_cn' else 'New Post'
+
+
+		+load('jquery#1.8.1 knockout essage')
+		+load('/template/admin/editor/plugins/jquery.dateFormat-1.0.js /template/admin/editor/pure_editor.coffee')
+		script(type="text/javascript")
+			run_editor()

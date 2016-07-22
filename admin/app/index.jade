@@ -1,0 +1,73 @@
+html
+	+need_admin()
+	+i18n('Save', '保存', 'zh_cn')
+	+i18n('View', '浏览', 'zh_cn')
+
+	+i18n('note', 'Setup succeed, this is an app template for whole site.')
+	+i18n('note', '设置成功，这是针对整个网站的应用模板。', 'zh_cn')
+	+i18n('demo', 'Demo Text')
+	+i18n('demo', '演示文本', 'zh_cn')
+	+i18n('preview', 'Preview')
+	+i18n('preview', '效果预览', 'zh_cn')
+	+i18n('home', 'Go to Homepage')
+	+i18n('home', '访问首页', 'zh_cn')
+	+i18n('editor', 'Use WebEditor')
+	+i18n('editor', '使用WebEditor', 'zh_cn')
+
+
+	head
+		+mobile_meta()
+		title= template_package.title or 'Manage APP'
+	body
+		if template_package.metadata.no_index
+			+load('app_note.scss')
+			#header
+				if lang== 'zh_cn'
+					h1(style="{letter-spacing: 12px}")= _('note')
+				else
+					h1= _('note')
+				.buttons
+					a.link(target='_blank', href='/admin/app/demo_content')= _('demo')
+					a.link(target='_blank', href='/?demo=true')= _('preview')
+					a(href='/')= _('home')
+					a(href='/service/app/web_editor')= _('editor')
+		else
+			+load('app.scss')
+			index_doc = get_doc('index')
+			if index_doc and index_doc.type=='post'
+				path = index_doc.path
+				raw_content = index_doc._content
+			else
+				path = 'index.txt'
+				raw_content = ''
+				if template_package
+					raw_content = template_package._content
+				else
+					tmp_doc = get_doc('test.txt')
+					if tmp_doc
+						raw_content = tmp_doc._content
+
+			h1= template_package.metadata.slogan or template_package.title
+			textarea#content= raw_content
+			input#path(type='hidden', value=path)
+
+
+
+			.buttons
+				span.demo_buttons
+					if template_package.metadata.app_page
+						a(target="_blank", href=template_package.metadata.app_page) App Detail
+					if template_package._content
+						a(target="_blank", href="/admin/app/demo_content") Demo Content
+				a.button#save(href="#")= _('Save')
+				a.button#view(href="/", target="_blank")= _('View')
+
+			+get_resource('basic_js.js')
+			+load('jquery')
+			+load('app.coffee')
+			+load('essage')
+			script
+				Essage.show({message: "拖入图片到文本编辑区域，可以直接插入图片。", status: 'success'}, 3000)
+		
+		
+		
